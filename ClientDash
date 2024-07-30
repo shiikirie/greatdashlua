@@ -1,0 +1,42 @@
+-- dash by shikirai - https://www.youtube.com/@shikirai
+local dashmod = require(game.ReplicatedStorage.Modules.Dash)
+local dash = dashmod.new()
+local uis = game:GetService("UserInputService")
+
+local keys = {
+	W = false,
+	A = false,
+	S = false,
+	D = false,
+}
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local function onInputBegan(input, gameProcessedEvent)
+	if input.KeyCode == Enum.KeyCode.Q and humanoid.Health > 0 then
+		for key, isPressed in pairs(keys) do
+			if isPressed then
+				local isShiftLock = (uis.MouseBehavior == Enum.MouseBehavior.LockCenter)
+				dash:Dash(key, isShiftLock)
+				break
+			end
+		end
+	end
+
+	local keyName = input.KeyCode.Name
+	if keys[keyName] ~= nil then
+		keys[keyName] = true
+	end
+end
+
+local function onInputEnded(input, gameProcessedEvent)
+	local keyName = input.KeyCode.Name
+	if keys[keyName] ~= nil then
+		keys[keyName] = false
+	end
+end
+
+uis.InputBegan:ConnectParallel(onInputBegan)
+uis.InputEnded:ConnectParallel(onInputEnded)
