@@ -1,4 +1,4 @@
-# greatdashlua
+# Great Dash System with vfx and dashvisualizer Cooldown
 Here I presented my implementation of dash
 
 to achieve the desired effect operation under the vfh script you must add desks with the name "vfx" and "dashvisual"
